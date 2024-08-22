@@ -1,4 +1,5 @@
 import express from 'express';
+import ejs from 'ejs';
 
 
 const app = express();
@@ -14,7 +15,7 @@ app.use(express.urlencoded({extended:true}))
 const port = 3000
 
 app.get('/', (req, res)=>{
-    res.send("hello world")
+    res.render('index')
 })
 
 
