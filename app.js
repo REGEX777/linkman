@@ -14,12 +14,12 @@ app.use(express.urlencoded({extended:true}))
 // Route imports
 import index from './routes/index.js';
 import dashboard from './routes/dashboard.js'
-
+import analyse from './routes/analyse.js'
 
 // routes implement
 app.use('/', index);
 app.use('/dashboard', dashboard)
-
+app.use('/analyse', analyse)
 
 
 app.listen(port, ()=>{
