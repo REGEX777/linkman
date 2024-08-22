@@ -1,0 +1,20 @@
+{
+  "name": "linkman",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "build-css": "npx tailwindcss -i ./input.css -o ./public/css/styles.css --watch"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.10"
+  }
+}
