@@ -1,10 +1,17 @@
+import 'dotenv/config';
 import express from 'express';
 import ejs from 'ejs';
+import mongoose from 'mongoose';
 
 
 const app = express();
 const port = 3000
 
+// database connection 
+mongoose.connect(process.env.MONGO_URI)
+.then(()=>{
+    console.log("Succesfully connected to the database.")
+}).catch(err=>{console.log(err)})
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'))
