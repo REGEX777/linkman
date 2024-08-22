@@ -4,20 +4,31 @@
             <br><br>
             <div class="w-[80%] flex items-center justify-start">
                 <div class="min-h-[20rem] bg-[#1F252D] w-[70%] rounded-lg flex flex-col items-start justify-center px-20 text-white gap-7">
-                    <% if (error.length > 0) { %>
-                        <div class="h-12 flex items-center justify-center w-[80%] rounded-lg bg-red-500">
-                            <p><i class="fa-solid fa-triangle-exclamation"></i> <%= error %></p>
-                        </div>
-                    <% } %>
 
-                    <p>Shorten your URLs</p>
-                    <form class="w-full flex flex-col gap-7" action="/" method="post">
-                        <input class="h-14 w-[80%] bg-[#181D23] rounded-lg border-2 border-[#FF2145] px-10" name="url" placeholder="Enter the URL" type="text">
-                        <button class="h-[3rem] rounded-lg w-[8rem] bg-[#FF2145] text-white font-medium" type="submit">
-                            Shorten URL
+
+                    <p>URL Shortening Successful!</p>
+                    <div class="flex flex-row items-center justify-start gap-3 w-full">
+                        <input id="url-input" class="h-14 w-[80%] bg-[#181D23] rounded-lg border-2 border-[#FF2145] px-10" name="url" placeholder="Enter the URL" type="text" value="<%= shortUrl %>" readonly>
+                        <button id="copy-button" class="flex items-center justify-center h-14 w-14 bg-[#FF2145] rounded-lg">
+                            <p class="text-xl"><i class="fa-regular fa-clipboard"></i></p>
+                        </button>
+                    </div>
+
+                    <form class="w-full flex flex-col gap-7" action="/" method="get">
+                        <button class="h-[3rem] rounded-lg w-[10rem] bg-[#FF2145] text-white font-medium" type="submit">
+                            Shorten New URL
                         </button>
                     </form>
                 </div>
             </div>
         </div>
 <%- include('partials/foot') -%>
+
+<script>
+    document.getElementById('copy-button').addEventListener('click', function() {
+        const input = document.getElementById('url-input');
+        input.select(); 
+        document.execCommand('copy'); 
+        alert('URL copied to clipboard!');
+    });
+</script>

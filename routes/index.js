@@ -1,5 +1,23 @@
 import express from 'express';
 import crypto from 'crypto';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url'; 
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const configPath = path.join(__dirname, '../config.json');
+function getConfig() {
+    try {
+        const configData = fs.readFileSync(configPath, 'utf8');
+        return JSON.parse(configData);
+    } catch (error) {
+        console.error('Error reading config file:', error);
+        return {};
+    }
+}
+const config = getConfig();
+
 
 const debug = true;
 
@@ -43,7 +61,8 @@ router.post('/', isValidUrl ,async (req, res)=>{
                 console.log(`Short URL created succesfully.`)
             }
         })
-        res.send("Suxes")
+        const shortUrl = `${config.domain}${link.redirectString}`;
+        res.render('success', {shortUrl})
     }catch (err){
         console.log(err)
     }
