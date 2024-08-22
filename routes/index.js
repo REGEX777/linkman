@@ -10,6 +10,8 @@ function random5digitString(length){
     .slice(0, length)
 }
 
+// Middlware import
+import isValidUrl from '../middleware/urlCheck.js';
 
 // model import
 import Link from '../models/Link.js'
@@ -17,10 +19,13 @@ import Link from '../models/Link.js'
 const router = express.Router();
 
 router.get('/', (req, res)=>{
-    res.render('index')
+    res.render('index', { 
+        error: req.flash('error'), 
+        success: req.flash('success') 
+    })
 })
 
-router.post('/',async (req, res)=>{
+router.post('/', isValidUrl ,async (req, res)=>{
     try{
         const randString = random5digitString(5);
         const url = req.body.url;

@@ -2,7 +2,8 @@ import 'dotenv/config';
 import express from 'express';
 import ejs from 'ejs';
 import mongoose from 'mongoose';
-
+import session from 'express-session';
+import flash from 'express-flash';
 
 const app = express();
 const port = 3000
@@ -16,7 +17,13 @@ mongoose.connect(process.env.MONGO_URI)
 app.set('view engine', 'ejs');
 app.use(express.static('public'))
 app.use(express.urlencoded({extended:true}))
+app.use(session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true
 
+}))
+app.use(flash());
 
 // Route imports
 import index from './routes/index.js';
