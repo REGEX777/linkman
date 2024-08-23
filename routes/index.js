@@ -18,7 +18,6 @@ function getConfig() {
 }
 const config = getConfig();
 
-
 const debug = true;
 
 function random5digitString(length){
@@ -41,6 +40,22 @@ router.get('/', (req, res)=>{
         error: req.flash('error'), 
         success: req.flash('success') 
     })
+})
+
+
+router.get('/:redirectString', async (req, res)=>{
+    try{
+        const redString = req.params.redirectString;
+        const link = await Link.findOne({redirectString: redString});
+
+        if(!link){
+            res.status(404).send("Not Found")
+        }
+
+        res.redirect(link.url);
+    }catch(err){
+
+    }
 })
 
 router.post('/', isValidUrl ,async (req, res)=>{
