@@ -8,6 +8,10 @@ const visitSchema = new mongoose.Schema({
     count: {
         type: Number,
         default: 1
+    },
+    totalVisits: {
+        type: Number,
+        default: 1
     }
 });
 

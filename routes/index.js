@@ -75,23 +75,21 @@ router.get('/api/:redirectString', async (req, res) => {
             if (!country) {
                 console.error('country info undegined');
                 return res.status(500).send('failed to get country info');
-            }
-            console.log('Country:', country); 
+            } 
         } catch (err) {
             console.error('error while trying to get country:', err);
             return res.status(500).send('failed to get country info');
         }
-
-        console.log('Visits Data:', link.visits); 
+        link.totalVisits += 1;
 
         let countryVisit = link.visits.find(v => v.country === country);
 
         if (countryVisit) {
             countryVisit.count += 1;
-            console.log('Updated countryVisit:', countryVisit);
+            console.log('updated countryVisit:', countryVisit);
         } else {
             link.visits.push({ country, count: 1 });
-            console.log('New countryVisit:', { country, count: 1 });
+            console.log('new countryVisit:', { country, count: 1 });
         }
 
         const today = new Date();
@@ -119,8 +117,8 @@ router.get('/api/:redirectString', async (req, res) => {
         res.redirect(link.url);
 
     } catch (err) {
-        console.error('Error in /api/:redirectString route:', err);
-        res.status(500).send("Server Error");
+        console.error('error in /api/:redirectString route:', err);
+        res.status(500).send("server Error");
     }
 });
 
