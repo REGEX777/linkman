@@ -9,53 +9,47 @@
                 <canvas id="dailyVisitsChart"></canvas>
             </div>
             <div class="flex items-center justify-center h-[15rem] w-[40rem] bg-[#1F252D]">
+                <!-- viisteor graph will go here -->
             </div>
         </div>
         <div class="flex flex-grow flex-col items-start justify-start w-full gap-10">
-            <p class="text-2xl font-medium">Geography</p>
+            <p class="text-2xl font-medium">Top Countries</p>
             <div class="flex flex-col items-center justify-center w-[100%]">
                 <div class="flex items-center justify-center w-full bg-[#1F252D] rounded-t-lg">
                     <div class="w-[80%] flex items-center justify-between h-[4rem] text-[#797979]">
                         <div class="flex items-center justify-center gap-20">
                             <p>Sr. no.</p>
-                            <p>Link</p>
+                            <p>Country</p>
                         </div>
                         <p>Visits</p>
                     </div>
                 </div>
+
+                <% sortedCountries.forEach((country, index) => { %>
                 <div class="flex items-center justify-center h-[3rem] bg-[#181D23] w-full text-white">
                     <div class="flex items-center justify-between w-[80%]">
                         <div class="flex items-center justify-center gap-20">
-                            <p>1</p>
-                            <p>Link</p>
+                            <p><%= index + 1 %></p>
+                            <p><%= country.country %></p>
                         </div>
-                        <p>Visits</p>
+                        <p><%= country.visits %></p>
                     </div>
                 </div>
-                <div class="flex items-center justify-center h-[3rem] bg-[#181D23] w-full text-white">
-                    <div class="flex items-center justify-between w-[80%]">
-                        <div class="flex items-center justify-center gap-20">
-                            <p>1</p>
-                            <p>Link</p>
-                        </div>
-                        <p>Visits</p>
-                    </div>
-                </div>
+                <% }) %>
             </div>
         </div>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    const dailyVisits =JSON.stringify('<%- dailyVisits %>');
-    // const dailyVisits = JSON.parse('<%- dailyVisits %>');
+    const dailyVisits = JSON.parse('<%- dailyVisits %>');
 
     const labels = Object.keys(dailyVisits);
     const data = Object.values(dailyVisits);
 
     const ctx = document.getElementById('dailyVisitsChart').getContext('2d');
     const dailyVisitsChart = new Chart(ctx, {
-        type: 'line', // You can change this to 'bar', 'pie', etc.
+        type: 'line',
         data: {
             labels: labels,
             datasets: [{
