@@ -5,11 +5,13 @@
             <p class="text-2xl font-medium"><%= linkUrl %></p>
         </div>
         <div class="flex flex-row items-start justify-center gap-5">
+            <!-- daily visitor chart -->
             <div class="flex items-center justify-center h-[15rem] w-[40rem] bg-[#1F252D]">
                 <canvas id="dailyVisitsChart"></canvas>
             </div>
+            <!-- country visitor chart -->
             <div class="flex items-center justify-center h-[15rem] w-[40rem] bg-[#1F252D]">
-                <!-- viisteor graph will go here -->
+                <canvas id="countryVisitsChart"></canvas>
             </div>
         </div>
         <div class="flex flex-grow flex-col items-start justify-start w-full gap-10">
@@ -44,19 +46,44 @@
 <script>
     const dailyVisits = JSON.parse('<%- dailyVisits %>');
 
-    const labels = Object.keys(dailyVisits);
-    const data = Object.values(dailyVisits);
+    const dailyLabels = Object.keys(dailyVisits);
+    const dailyData = Object.values(dailyVisits);
 
-    const ctx = document.getElementById('dailyVisitsChart').getContext('2d');
-    const dailyVisitsChart = new Chart(ctx, {
-        type: 'line',
+    const dailyCtx = document.getElementById('dailyVisitsChart').getContext('2d');
+    const dailyVisitsChart = new Chart(dailyCtx, {
+        type: 'line', 
         data: {
-            labels: labels,
+            labels: dailyLabels,
             datasets: [{
                 label: 'Daily Visits',
-                data: data,
+                data: dailyData,
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    const countryNames = JSON.parse('<%- countryNames %>');
+    const countryVisitCounts = JSON.parse('<%- countryVisitCounts %>');
+
+    const countryCtx = document.getElementById('countryVisitsChart').getContext('2d');
+    const countryVisitsChart = new Chart(countryCtx, {
+        type: 'bar', 
+        data: {
+            labels: countryNames,
+            datasets: [{
+                label: 'Country Visits',
+                data: countryVisitCounts,
+                backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                borderColor: 'rgba(153, 102, 255, 1)',
                 borderWidth: 1
             }]
         },
