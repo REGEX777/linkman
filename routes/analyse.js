@@ -17,7 +17,8 @@ router.get('/:redirectString', async (req, res) => {
             acc[visitDate] += visit.count;
             return acc;
         }, {});
-
+        console.log(dailyVisits);
+        
         res.render('analyse', { 
             linkUrl: `https://domain.com/${link.redirectString}`, 
             dailyVisits: JSON.stringify(dailyVisits)
