@@ -43,7 +43,7 @@ router.get('/', (req, res)=>{
 })
 
 
-router.get('/:redirectString', async (req, res)=>{
+router.get('/api/:redirectString', async (req, res)=>{
     try{
         const redString = req.params.redirectString;
         const link = await Link.findOne({redirectString: redString});
@@ -55,7 +55,7 @@ router.get('/:redirectString', async (req, res)=>{
         const today = new Date();
         today.setHours(0, 0, 0, 0);
 
-        const linkVisit = link.visits.find(visit=>{
+        const todayVisit = link.visits.find(visit=>{
             const visitDate = new Date(visit.date);
             visitDate.setHours(0,0,0,0)
             return visitDate.getTime() === today.getTime();

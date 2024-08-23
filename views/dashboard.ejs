@@ -1,4 +1,5 @@
 <%- include('partials/nav') -%>
+
 <div class="flex flex-grow flex-col items-center justify-start w-full gap-10">
     <div class="w-[80%] flex items-center justify-center h-[5rem] bg-[#1F252D] rounded-lg">
         <div class="w-[90%] flex items-center justify-between text-white">
@@ -8,6 +9,7 @@
             </div>
         </div>
     </div>
+
     <div class="flex flex-col items-center justify-center w-[80%]">
         <div class="flex items-center justify-center w-full bg-[#1F252D] rounded-t-lg">
             <div class="w-[80%] flex items-center justify-between h-[4rem] text-[#797979]">
@@ -18,79 +20,18 @@
                 <p>Visits</p>
             </div>
         </div>
-        <div class="flex items-center justify-center h-[3rem] bg-[#181D23] w-full text-white">
-            <div class="flex items-center justify-between w-[80%]">
-                <div class="flex items-center justify-center gap-20">
-                    <p>1</p>
-                    <p>Link</p>
-                </div>
-                <p>Visits</p>
-            </div>
-        </div>
-        <div class="flex items-center justify-center h-[3rem] bg-[#1F252D] w-full text-white">
-            <div class="flex items-center justify-between w-[80%]">
-                <div class="flex items-center justify-center gap-20">
-                    <p>2</p>
-                    <p>Link</p>
-                </div>
-                <p>Visits</p>
-            </div>
-        </div>
-        <div class="flex items-center justify-center h-[3rem] bg-[#181D23] w-full text-white">
-            <div class="flex items-center justify-between w-[80%]">
-                <div class="flex items-center justify-center gap-20">
-                    <p>1</p>
-                    <p>Link</p>
-                </div>
-                <p>Visits</p>
-            </div>
-        </div>
-        <div class="flex items-center justify-center h-[3rem] bg-[#1F252D] w-full text-white">
-            <div class="flex items-center justify-between w-[80%]">
-                <div class="flex items-center justify-center gap-20">
-                    <p>2</p>
-                    <p>Link</p>
-                </div>
-                <p>Visits</p>
-            </div>
-        </div>
-        <div class="flex items-center justify-center h-[3rem] bg-[#181D23] w-full text-white">
-            <div class="flex items-center justify-between w-[80%]">
-                <div class="flex items-center justify-center gap-20">
-                    <p>1</p>
-                    <p>Link</p>
-                </div>
-                <p>Visits</p>
-            </div>
-        </div>
-        <div class="flex items-center justify-center h-[3rem] bg-[#1F252D] w-full text-white">
-            <div class="flex items-center justify-between w-[80%]">
-                <div class="flex items-center justify-center gap-20">
-                    <p>2</p>
-                    <p>Link</p>
-                </div>
-                <p>Visits</p>
-            </div>
-        </div>
-        <div class="flex items-center justify-center h-[3rem] bg-[#181D23] w-full text-white">
-            <div class="flex items-center justify-between w-[80%]">
-                <div class="flex items-center justify-center gap-20">
-                    <p>1</p>
-                    <p>Link</p>
-                </div>
-                <p>Visits</p>
-            </div>
-        </div>
-        <div class="flex items-center justify-center h-[3rem] bg-[#1F252D] w-full text-white">
-            <div class="flex items-center justify-between w-[80%]">
-                <div class="flex items-center justify-center gap-20">
-                    <p>2</p>
-                    <p>Link</p>
-                </div>
-                <p>Visits</p>
-            </div>
-        </div>
 
+        <% links.forEach((link, index) => { %>
+            <div class="flex items-center justify-center h-[3rem] <%= index % 2 === 0 ? 'bg-[#181D23]' : 'bg-[#1F252D]' %> w-full text-white">
+                <div class="flex items-center justify-between w-[80%]">
+                    <div class="flex items-center justify-center gap-20">
+                        <p><%= index + 1 %></p>
+                        <p><%= link.url %></p>
+                    </div>
+                    <p><%= link.visits.reduce((total, visit) => total + visit.count, 0) %></p> <!-- Sum up all visits for this link -->
+                </div>
+            </div>
+        <% }) %>
     </div>
 </div>
 
