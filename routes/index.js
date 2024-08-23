@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url'; 
+import ipinfo from 'ipinfo';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,6 +17,20 @@ function getConfig() {
         return {};
     }
 }
+
+function getCountry(ip) {
+    return new Promise((resolve, reject) => {
+        ipinfo(ip, (err, data) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(data.country); // 'US', 'IN', etc.
+            }
+        });
+    });
+}
+
+
 const config = getConfig();
 
 const debug = true;
@@ -50,6 +65,16 @@ router.get('/api/:redirectString', async (req, res)=>{
 
         if(!link){
             res.status(404).send("Not Found")
+        }
+        const ip = req.ip; 
+        const country = await getCountry(ip); 
+
+        const visit = link.visits.find(v => v.country === country);
+
+        if (visit) {
+            visit.count += 1; 
+        } else {
+            link.visits.push({ country }); 
         }
 
         const today = new Date();

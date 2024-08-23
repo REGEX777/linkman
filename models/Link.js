@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 
 
 const visitSchema = new mongoose.Schema({
+    country: { type: String },
     date: Date,
     count: {
         type: Number,
