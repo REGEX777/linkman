@@ -52,9 +52,28 @@ router.get('/:redirectString', async (req, res)=>{
             res.status(404).send("Not Found")
         }
 
-        res.redirect(link.url);
-    }catch(err){
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
 
+        const linkVisit = link.visits.find(visit=>{
+            const visitDate = new Date(visit.date);
+            visitDate.setHours(0,0,0,0)
+            return visitDate.getTime() === today.getTime();
+        })
+
+        if (todayVisit) {
+            todayVisit.count += 1;
+        } else {
+            link.visits.push({ date: today, count: 1 });
+        }
+
+        await link.save();
+
+        res.redirect(link.url);
+
+    }catch(err){
+        console.error(err);
+        res.status(500).send("Server Error");
     }
 })
 
