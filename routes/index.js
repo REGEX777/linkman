@@ -58,49 +58,71 @@ router.get('/', (req, res)=>{
 })
 
 
-router.get('/api/:redirectString', async (req, res)=>{
-    try{
+router.get('/api/:redirectString', async (req, res) => {
+    try {
         const redString = req.params.redirectString;
-        const link = await Link.findOne({redirectString: redString});
+        const link = await Link.findOne({ redirectString: redString });
 
-        if(!link){
-            res.status(404).send("Not Found")
+        if (!link) {
+            return res.status(404).send("Not Found");
         }
-        const ip = req.ip; 
-        const country = await getCountry(ip); 
 
-        const visit = link.visits.find(v => v.country === country);
+        const ip = "8.8.8.8"; 
+        let country;
 
-        if (visit) {
-            visit.count += 1; 
+        try {
+            country = await getCountry(ip); 
+            if (!country) {
+                console.error('country info undegined');
+                return res.status(500).send('failed to get country info');
+            }
+            console.log('Country:', country); 
+        } catch (err) {
+            console.error('error while trying to get country:', err);
+            return res.status(500).send('failed to get country info');
+        }
+
+        console.log('Visits Data:', link.visits); 
+
+        let countryVisit = link.visits.find(v => v.country === country);
+
+        if (countryVisit) {
+            countryVisit.count += 1;
+            console.log('Updated countryVisit:', countryVisit);
         } else {
-            link.visits.push({ country }); 
+            link.visits.push({ country, count: 1 });
+            console.log('New countryVisit:', { country, count: 1 });
         }
 
         const today = new Date();
         today.setHours(0, 0, 0, 0);
 
-        const todayVisit = link.visits.find(visit=>{
+        let todayVisit = link.visits.find(visit => {
+            if (!visit.date) {
+                return false;
+            }
             const visitDate = new Date(visit.date);
-            visitDate.setHours(0,0,0,0)
+            visitDate.setHours(0, 0, 0, 0);
             return visitDate.getTime() === today.getTime();
-        })
+        });
 
         if (todayVisit) {
             todayVisit.count += 1;
+            console.log('updated todayVisit:', todayVisit);
         } else {
             link.visits.push({ date: today, count: 1 });
+            console.log('new todayVisit:', { date: today, count: 1 });
         }
 
         await link.save();
 
         res.redirect(link.url);
 
-    }catch(err){
-        console.error(err);
+    } catch (err) {
+        console.error('Error in /api/:redirectString route:', err);
         res.status(500).send("Server Error");
     }
-})
+});
 
 router.post('/', isValidUrl ,async (req, res)=>{
     try{
