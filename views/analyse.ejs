@@ -6,7 +6,7 @@
         </div>
         <div class="flex flex-row items-start justify-center gap-5">
             <div class="flex items-center justify-center h-[15rem] w-[40rem] bg-[#1F252D]">
-                <div id="dailyVisitsChart"></div>
+                <canvas id="dailyVisitsChart"></canvas>
             </div>
             <div class="flex items-center justify-center h-[15rem] w-[40rem] bg-[#1F252D]">
             </div>
@@ -45,27 +45,35 @@
         </div>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    const dailyVisits = JSON.parse('<%- dailyVisits %>');
+    const dailyVisits =JSON.stringify('<%- dailyVisits %>');
+    // const dailyVisits = JSON.parse('<%- dailyVisits %>');
 
-    console.log(dailyVisits);  
+    const labels = Object.keys(dailyVisits);
+    const data = Object.values(dailyVisits);
 
-    const options = {
-        chart: {
-            type: 'line'
+    const ctx = document.getElementById('dailyVisitsChart').getContext('2d');
+    const dailyVisitsChart = new Chart(ctx, {
+        type: 'line', // You can change this to 'bar', 'pie', etc.
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Daily Visits',
+                data: data,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
         },
-        series: [{
-            name: 'Daily Visits',
-            data: Object.values(dailyVisits)
-        }],
-        xaxis: {
-            categories: Object.keys(dailyVisits)
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
         }
-    };
-
-    const chart = new ApexCharts(document.querySelector("#dailyVisitsChart"), options);
-    chart.render();
+    });
 </script>
 
 <%- include('partials/foot') -%>
