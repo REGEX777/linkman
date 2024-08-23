@@ -1,57 +1,53 @@
 <%- include('partials/nav') -%>
-<div class="flex flex-grow items-start justify-center w-full text-white">
-    <div class="w-[80%] flex flex-col items-start justify-start gap-10">
-        <div class="flex items-center justify-start bg-[#1F252D] h-20 px-5 rounded-lg">
+<div class="flex flex-col items-center justify-start w-full text-white py-10">
+    <div class="w-[90%] flex flex-col items-center justify-start gap-10">
+        <div class="flex items-center justify-start bg-[#1F252D] h-20 px-5 rounded-lg w-full">
             <p class="text-2xl font-medium"><%= linkUrl %></p>
         </div>
-        <div class="flex flex-row items-start justify-center gap-5">
-            <!-- daily visitor chart -->
-            <div class="flex items-center justify-center h-[15rem] w-[40rem] bg-[#1F252D]">
+        
+        <div class="flex flex-col lg:flex-row items-start justify-between gap-5 w-full">
+            <div class="flex items-center justify-center h-[20rem] lg:h-[30rem] w-full bg-[#1F252D] rounded-lg p-5">
                 <canvas id="dailyVisitsChart"></canvas>
             </div>
-            <!-- country visitor chart -->
-            <div class="flex items-center justify-center h-[15rem] w-[40rem] bg-[#1F252D]">
+            <div class="flex items-center justify-center h-[20rem] lg:h-[30rem] w-full bg-[#1F252D] rounded-lg p-5">
                 <canvas id="countryVisitsChart"></canvas>
             </div>
         </div>
-        <div class="flex flex-grow flex-col items-start justify-start w-full gap-10">
-            <p class="text-2xl font-medium">Top Countries</p>
-            <div class="flex flex-col items-center justify-center w-[100%]">
-                <div class="flex items-center justify-center w-full bg-[#1F252D] rounded-t-lg">
-                    <div class="w-[80%] flex items-center justify-between h-[4rem] text-[#797979]">
-                        <div class="flex items-center justify-center gap-20">
-                            <p>Sr. no.</p>
-                            <p>Country</p>
-                        </div>
-                        <p>Visits</p>
-                    </div>
-                </div>
 
-                <% sortedCountries.forEach((country, index) => { %>
-                <div class="flex items-center justify-center h-[3rem] bg-[#181D23] w-full text-white">
-                    <div class="flex items-center justify-between w-[80%]">
-                        <div class="flex items-center justify-center gap-20">
-                            <p><%= index + 1 %></p>
-                            <p><%= country.country %></p>
-                        </div>
-                        <p><%= country.visits %></p>
+        <div class="flex flex-col items-start justify-start w-full gap-5">
+            <p class="text-2xl font-medium">Top Countries</p>
+            <div class="w-full bg-[#1F252D] rounded-lg overflow-hidden">
+                <div class="flex items-center justify-between px-5 py-3 bg-[#1B2128]">
+                    <div class="flex items-center gap-20">
+                        <p>Sr. no.</p>
+                        <p>Country</p>
                     </div>
+                    <p>Visits</p>
+                </div>
+                <% sortedCountries.forEach((country, index) => { %>
+                <div class="flex items-center justify-between px-5 py-3 bg-[#181D23] border-b border-[#1B2128]">
+                    <div class="flex items-center gap-20">
+                        <p><%= index + 1 %></p>
+                        <p><%= country.country %></p>
+                    </div>
+                    <p><%= country.visits %></p>
                 </div>
                 <% }) %>
             </div>
         </div>
     </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+    // daily vsits Chart
     const dailyVisits = JSON.parse('<%- dailyVisits %>');
-
     const dailyLabels = Object.keys(dailyVisits);
     const dailyData = Object.values(dailyVisits);
 
     const dailyCtx = document.getElementById('dailyVisitsChart').getContext('2d');
     const dailyVisitsChart = new Chart(dailyCtx, {
-        type: 'line', 
+        type: 'line',
         data: {
             labels: dailyLabels,
             datasets: [{
@@ -59,38 +55,121 @@
                 data: dailyData,
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
+                borderWidth: 2,
+                fill: true, 
+                tension: 0.4, 
             }]
         },
         options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        color: '#ffffff',
+                        font: {
+                            size: 14
+                        }
+                    }
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                    titleColor: '#ffffff',
+                    bodyColor: '#ffffff'
+                }
+            },
             scales: {
+                x: {
+                    ticks: {
+                        color: '#ffffff',
+                        font: {
+                            size: 12
+                        }
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    }
+                },
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    ticks: {
+                        color: '#ffffff',
+                        font: {
+                            size: 12
+                        }
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    }
                 }
             }
         }
     });
 
+    // Country Visits Chart
     const countryNames = JSON.parse('<%- countryNames %>');
     const countryVisitCounts = JSON.parse('<%- countryVisitCounts %>');
 
     const countryCtx = document.getElementById('countryVisitsChart').getContext('2d');
     const countryVisitsChart = new Chart(countryCtx, {
-        type: 'bar', 
+        type: 'bar',
         data: {
             labels: countryNames,
             datasets: [{
                 label: 'Country Visits',
                 data: countryVisitCounts,
-                backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                backgroundColor: 'rgba(153, 102, 255, 0.5)',
                 borderColor: 'rgba(153, 102, 255, 1)',
-                borderWidth: 1
+                borderWidth: 2
             }]
         },
         options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        color: '#ffffff',
+                        font: {
+                            size: 14
+                        }
+                    }
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                    titleColor: '#ffffff',
+                    bodyColor: '#ffffff'
+                }
+            },
             scales: {
+                x: {
+                    ticks: {
+                        color: '#ffffff',
+                        font: {
+                            size: 12
+                        }
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    }
+                },
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    ticks: {
+                        color: '#ffffff',
+                        font: {
+                            size: 12
+                        }
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)'
+                    }
                 }
             }
         }
