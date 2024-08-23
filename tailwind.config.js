@@ -4,7 +4,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        "inter": 'Inter, sans-serif'
+        "inter": 'Inter, sans-serif',
+        "clash-display": 'Clash Display, sans-serif',
+        "boska": 'Boska, serif'
       },
       animation: {
         bounce: 'bounce 0.5s ease-in-out',

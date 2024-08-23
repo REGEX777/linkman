@@ -11,15 +11,18 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "crypto": "^1.0.1",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "express-flash": "^0.0.2",
+    "express-rate-limit": "^7.4.0",
     "express-session": "^1.18.0",
     "ipinfo": "^1.5.1",
     "is-url": "^1.2.4",
-    "mongoose": "^8.5.3"
+    "mongoose": "^8.5.3",
+    "passport": "^0.7.0"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.10"

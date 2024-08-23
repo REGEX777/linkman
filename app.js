@@ -29,11 +29,20 @@ app.use(flash());
 import index from './routes/index.js';
 import dashboard from './routes/dashboard.js'
 import analyse from './routes/analyse.js'
+import login from './routes/login.js'
+import signup from './routes/signup.js'
 
 // routes implement
 app.use('/', index);
 app.use('/dashboard', dashboard)
 app.use('/analyse', analyse)
+app.use('/signup', signup)
+app.use((req, res) => {
+    res.status(404).render('404', { url: req.originalUrl });
+});
+app.use((req, res) => {
+    res.status(500).render('500', { url: req.originalUrl });
+});
 
 app.listen(port, ()=>{
     console.log(`App started on PORT ${port}`)
