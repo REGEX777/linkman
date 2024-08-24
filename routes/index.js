@@ -69,6 +69,14 @@ router.get('/api/:redirectString', requireLogin, async (req, res) => {
         if (!link) {
             return res.status(404).send("Not Found");
         }
+        
+        if (link && link.active) { 
+            link.visits.push({ count: 1, date: new Date() });
+            await link.save();
+            res.redirect(link.url);
+        } else {
+            res.status(404).send('Link not found or inactive.');
+        }
 
         const ip = "8.8.8.8"; 
         let country;
@@ -217,4 +225,18 @@ router.delete('/delete/:id', requireLogin, async (req, res) => {
         res.status(500).send('Server error');
     }
 });
+
+router.post('/toggle-active/:id', requireLogin, async (req, res) => {
+    try {
+        const link = await Link.findById(req.params.id);
+        link.active = !link.active;
+        await link.save();
+        res.redirect('/');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
+});
+
+
 export default router;

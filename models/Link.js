@@ -23,6 +23,7 @@ const link = new mongoose.Schema({
     visits: [visitSchema],
     expirationDate: { type: Date, required: false },
     pinned: { type: Boolean, default: false },
+    active: { type: Boolean, default: true }
 })
 
 const Link = mongoose.model('Link', link)
