@@ -61,3 +61,12 @@ tag is not defined - URL: /dashboard - IP: ::ffff:127.0.0.1
     29|               class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"><%= tag.name %></a>
 
 tag is not defined - URL: /dashboard - IP: ::1
+2024-08-24T18:40:07.514Z - error: E:\codin_stuff\linkman\linkman\views\success.ejs:16
+    14|                         </button>
+    15|                         <p class="mt-5">Scan the QR code:</p>
+ >> 16|                         <img src="<%= qrCodeUrl %>" alt="QR Code">
+    17|                     </div>
+    18| 
+    19|                     <form class="w-full flex flex-col gap-7" action="/" method="get">
+
+qrCodeUrl is not defined - URL: / - IP: ::1

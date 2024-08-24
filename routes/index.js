@@ -179,8 +179,6 @@ router.post('/', requireLogin, isValidUrl, async (req, res) => {
             res.render('success', { shortUrl, qrCodeUrl });
         });
 
-        const shortUrl = `${config.domain}${link.redirectString}`;
-        res.render('success', { shortUrl });
     } catch (err) {
         console.log(err);
     }
