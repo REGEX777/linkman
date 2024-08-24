@@ -1,0 +1,63 @@
+2024-08-24T13:07:55.972Z - error: E:\codin_stuff\linkman\linkman\views\dashboard.ejs:26
+    24|               class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">See all</a>
+    25|           </li>
+ >> 26|           <% tag.forEach(function(tag){ %>
+    27|           <li>
+    28|             <a href="/portfolio?sortby=<%= tag.name %>"
+    29|               class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"><%= tag.name %></a>
+
+tag is not defined - URL: /dashboard - IP: ::1
+2024-08-24T13:08:05.947Z - error: E:\codin_stuff\linkman\linkman\views\dashboard.ejs:26
+    24|               class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">See all</a>
+    25|           </li>
+ >> 26|           <% tag.forEach(function(tag){ %>
+    27|           <li>
+    28|             <a href="/portfolio?sortby=<%= tag.name %>"
+    29|               class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"><%= tag.name %></a>
+
+tag is not defined - URL: /dashboard - IP: ::1
+2024-08-24T13:08:06.803Z - error: E:\codin_stuff\linkman\linkman\views\dashboard.ejs:26
+    24|               class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">See all</a>
+    25|           </li>
+ >> 26|           <% tag.forEach(function(tag){ %>
+    27|           <li>
+    28|             <a href="/portfolio?sortby=<%= tag.name %>"
+    29|               class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"><%= tag.name %></a>
+
+tag is not defined - URL: /dashboard - IP: ::1
+2024-08-24T13:08:36.952Z - error: E:\codin_stuff\linkman\linkman\views\dashboard.ejs:26
+    24|               class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">See all</a>
+    25|           </li>
+ >> 26|           <% tag.forEach(function(tag){ %>
+    27|           <li>
+    28|             <a href="/portfolio?sortby=<%= tag.name %>"
+    29|               class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"><%= tag.name %></a>
+
+tag is not defined - URL: /dashboard - IP: ::1
+2024-08-24T13:09:13.600Z - error: E:\codin_stuff\linkman\linkman\views\dashboard.ejs:26
+    24|               class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">See all</a>
+    25|           </li>
+ >> 26|           <% tag.forEach(function(tag){ %>
+    27|           <li>
+    28|             <a href="/portfolio?sortby=<%= tag.name %>"
+    29|               class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"><%= tag.name %></a>
+
+tag is not defined - URL: /dashboard - IP: ::1
+2024-08-24T13:09:59.524Z - error: E:\codin_stuff\linkman\linkman\views\dashboard.ejs:26
+    24|               class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">See all</a>
+    25|           </li>
+ >> 26|           <% tag.forEach(function(tag){ %>
+    27|           <li>
+    28|             <a href="/portfolio?sortby=<%= tag.name %>"
+    29|               class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"><%= tag.name %></a>
+
+tag is not defined - URL: /dashboard - IP: ::ffff:127.0.0.1
+2024-08-24T13:10:19.656Z - error: E:\codin_stuff\linkman\linkman\views\dashboard.ejs:26
+    24|               class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">See all</a>
+    25|           </li>
+ >> 26|           <% tag.forEach(function(tag){ %>
+    27|           <li>
+    28|             <a href="/portfolio?sortby=<%= tag.name %>"
+    29|               class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"><%= tag.name %></a>
+
+tag is not defined - URL: /dashboard - IP: ::1

@@ -18,7 +18,7 @@ const logError = (err, req, res, next) => {
 };
 
 const errorHandler = (err, req, res, next) => {
-    res.status(500).send('Server Error');
+    res.status(500).send('Server Erroreeeee');
 };
 
 export { logError, errorHandler };

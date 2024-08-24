@@ -5,9 +5,19 @@
         <div class="w-[90%] flex items-center justify-between text-white">
             <p>My Links</p>
             <div class="flex flex-row">
-                <p>Sort by <i class="fa-solid fa-chevron-down text-[#FF2145]"></i></p>
+                <p id="dropdownDelayButton">Sort by <i class="fa-solid fa-chevron-down text-[#FF2145]"></i></p>
             </div>
         </div>
+        <div id="dropdownDelay"
+        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDelayButton">
+          <li>
+            <a href="/portfolio"
+              class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">See all</a>
+          </li>
+  
+        </ul>
+      </div>
     </div>
 
     <div class="flex flex-col items-center justify-center w-[80%]">
@@ -26,7 +36,7 @@
                 <div class="flex items-center justify-between w-[80%]">
                     <div class="flex items-center justify-center gap-20">
                         <p><%= index + 1 %></p>
-                        <p><%= link.url %></p>
+                        <a class="hover:text-blue-600" href="/analyse/<%= link.redirectString %>"><%= link.url.substring(0, 50) %>...</a>
                     </div>
                     <p><%= link.visits.reduce((total, visit) => total + visit.count, 0) %></p> <!-- Sum up all visits for this link -->
                 </div>
@@ -34,5 +44,18 @@
         <% }) %>
     </div>
 </div>
-
+<script>
+    const closePopupButton = document.getElementById('closePopup');
+    const bg = document.getElementById('bg-segs')
+ 
+    const togglePopup = () => {
+      popup.classList.toggle('hidden');
+      bg.classList.toggle('blur-sm')
+  
+    };
+  
+    const popupButton = document.getElementById('popup');
+    popupButton.addEventListener('click', togglePopup);
+  </script>
+  
 <%- include('partials/foot') -%>

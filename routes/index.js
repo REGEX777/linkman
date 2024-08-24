@@ -131,11 +131,11 @@ router.post('/', isValidUrl ,async (req, res)=>{
     try{
         const randString = random5digitString(5);
         const url = req.body.url;
-        const expirationDays = parseInt(req.body.expiration);
-
-        // expiry date calculate
-        const expirationDate = new Date();
-        expirationDate.setDate(expirationDate.getDate() + expirationDays);
+        if (expiration !== "never") {
+            const expirationDays = parseInt(expiration);
+            expirationDate = new Date();
+            expirationDate.setDate(expirationDate.getDate() + expirationDays);
+        }
         const link = new Link({
             url: url,
             redirectString: randString,

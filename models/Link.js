@@ -19,7 +19,8 @@ const visitSchema = new mongoose.Schema({
 const link = new mongoose.Schema({
     url: String,
     redirectString: String,
-    visits: [visitSchema]
+    visits: [visitSchema],
+    expirationDate: { type: Date, required: false },
 })
 
 const Link = mongoose.model('Link', link)
