@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url'; 
 import ipinfo from 'ipinfo';
+import qrcode from 'qrcode';
 
 import { requireLogin } from '../middleware/requireLogin.js';
 
@@ -134,6 +135,16 @@ router.post('/', requireLogin, isValidUrl, async (req, res) => {
         const randString = random5digitString(5);
         const url = req.body.url;
         const expiration = req.body.expiration;
+        let customKeyword = req.body.customKeyword;
+
+        if (customKeyword) {
+            const existingLink = await Link.findOne({ redirectString: customKeyword });
+            if (existingLink) {
+                return res.render('error', { error: 'Custom keyword is already takes please enter something else.' });
+            }
+        } else {
+            customKeyword = random5digitString(5);
+        }
 
         let expirationDate = null;
         if (expiration !== "never") {
@@ -155,6 +166,17 @@ router.post('/', requireLogin, isValidUrl, async (req, res) => {
             if (debug) {
                 console.log(`Short URL created successfully.`);
             }
+        });
+
+        const shortUrl = `${config.domain}/${link.redirectString}`;
+
+        qrcode.toDataURL(shortUrl, function (err, qrCodeUrl) {
+            if (err) {
+                console.log(err);
+                return res.render('error', { error: 'failed to generate QR code.' });
+            }
+
+            res.render('success', { shortUrl, qrCodeUrl });
         });
 
         const shortUrl = `${config.domain}${link.redirectString}`;
