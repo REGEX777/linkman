@@ -185,6 +185,19 @@ router.post('/', requireLogin, isValidUrl, async (req, res) => {
     }
 });
 
+router.post('/pin/:id', requireLogin, async (req, res) => {
+    const { id } = req.params;
+    const { pinned } = req.body; 
+    
+    try {
+        await Link.findByIdAndUpdate(id, { pinned: pinned });
+        res.redirect('/dashboard'); 
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 
 router.delete('/delete/:id', requireLogin, async (req, res) => {
     try {

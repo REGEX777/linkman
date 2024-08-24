@@ -37,8 +37,13 @@
                 <p>Visits</p>
             </div>
         </div>
-
-        <% links.forEach((link, index) => { %>
+    
+        <% 
+            // PINNED LINKS PLS BE AT THE DAMN TOP FOR FUCKS SAKE
+            const sortedLinks = links.sort((a, b) => b.pinned - a.pinned);
+        %>
+    
+        <% sortedLinks.forEach((link, index) => { %>
             <div class="flex items-center justify-center h-[3rem] <%= index % 2 === 0 ? 'bg-[#181D23]' : 'bg-[#1F252D]' %> w-full text-white">
                 <div class="flex items-center justify-between w-[80%]">
                     <div class="flex items-center justify-center gap-20">
@@ -51,12 +56,12 @@
                                 <a class="hover:text-blue-600" href="/analyse/<%= link.redirectString %>">
                                     <%= link.name %>
                                 </a>
-                            <% }else{ %>
+                            <% } else { %>
                                 <a class="hover:text-blue-600" href="/analyse/<%= link.redirectString %>">
                                     <%= link.url.substring(0, 50) %>...
                                 </a>
                             <% } %>
-
+    
                             <!-- tooltip that will be visible after hovering over the text -->
                             <div class="absolute left-1/2 transform -translate-x-1/2 mt-2 w-max px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 <%= link.redirectString %>
@@ -64,6 +69,11 @@
                         </div>
                     </div>
                     <p><%= link.visits.reduce((total, visit) => total + visit.count, 0) %></p> <!-- Sum up all visits for this link -->
+                    <form action="/pin/<%= link._id %>" method="POST" class="inline">
+                        <button type="submit" name="pinned" value="<%= !link.pinned %>" class="bg-blue-500 text-white px-2 py-1 rounded-lg">
+                            <%= link.pinned ? 'Unpin' : 'Pin' %>
+                        </button>
+                    </form>
                 </div>
             </div>
         <% }) %>

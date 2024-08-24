@@ -22,6 +22,7 @@ const link = new mongoose.Schema({
     redirectString: { type: String, required: true, unique: true },
     visits: [visitSchema],
     expirationDate: { type: Date, required: false },
+    pinned: { type: Boolean, default: false },
 })
 
 const Link = mongoose.model('Link', link)
