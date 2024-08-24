@@ -5,8 +5,6 @@ import path from 'path';
 import { fileURLToPath } from 'url'; 
 import ipinfo from 'ipinfo';
 
-import { requireLogin } from '../middleware/requireLogin.js';
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const configPath = path.join(__dirname, '../config.json');
@@ -52,7 +50,7 @@ import Link from '../models/Link.js'
 
 const router = express.Router();
 
-router.get('/', requireLogin, (req, res)=>{
+router.get('/', (req, res)=>{
     res.render('index', { 
         error: req.flash('error'), 
         success: req.flash('success') 
@@ -69,17 +67,13 @@ router.get('/api/:redirectString', async (req, res) => {
             return res.status(404).send("Not Found");
         }
 
-        const response = await fetch(link.targetUrl);
-
-        if (!response.ok) {
-            const err = new Error(`Targert url having error: ${response.status}`);
-            err.status = 500;
-            return next(err);
-        }
-
-
         const ip = "8.8.8.8"; 
         let country;
+
+        const now = new Date();
+        if (link.expirationDate && now > link.expirationDate) {
+            return res.status(410).send("This link has expired.");
+        }
 
         try {
             country = await getCountry(ip); 
@@ -133,14 +127,19 @@ router.get('/api/:redirectString', async (req, res) => {
     }
 });
 
-router.post('/', requireLogin, isValidUrl ,async (req, res)=>{
+router.post('/', isValidUrl ,async (req, res)=>{
     try{
         const randString = random5digitString(5);
         const url = req.body.url;
+        const expirationDays = parseInt(req.body.expiration);
 
+        // expiry date calculate
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + expirationDays);
         const link = new Link({
             url: url,
-            redirectString: randString
+            redirectString: randString,
+            expirationDate: expirationDate
         })
 
         await link.save().then((err)=>{

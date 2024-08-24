@@ -13,6 +13,13 @@
                     <p>Shorten your URLs</p>
                     <form class="w-full flex flex-col gap-7" action="/" method="post">
                         <input class="h-14 w-[80%] bg-[#181D23] rounded-lg border-2 border-[#FF2145] px-10" name="url" placeholder="Enter the URL" type="text">
+                        <select class="h-14 w-[80%] bg-[#181D23] rounded-lg border-2 border-[#FF2145] px-10" name="expiration">
+                            <option value="1">1 day</option>
+                            <option value="3">3 days</option>
+                            <option value="7">7 days</option>
+                            <option value="30">30 days</option>
+                        </select>
+        
                         <button class="h-[3rem] rounded-lg w-[8rem] bg-[#FF2145] text-white font-medium" type="submit">
                             Shorten URL
                         </button>
