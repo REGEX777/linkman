@@ -13,7 +13,10 @@ const router = express.Router();
 
 // Signup route
 router.get('/', (req, res) => {
-    res.render('signup');
+    res.render('signup', { 
+        error: req.flash('error'), 
+        success: req.flash('success') 
+    })
 });
 
 router.post('/', [

@@ -5,6 +5,8 @@ import path from 'path';
 import { fileURLToPath } from 'url'; 
 import ipinfo from 'ipinfo';
 
+import { requireLogin } from '../middleware/requireLogin.js';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const configPath = path.join(__dirname, '../config.json');
@@ -50,7 +52,7 @@ import Link from '../models/Link.js'
 
 const router = express.Router();
 
-router.get('/', (req, res)=>{
+router.get('/', requireLogin, (req, res)=>{
     res.render('index', { 
         error: req.flash('error'), 
         success: req.flash('success') 
@@ -122,7 +124,7 @@ router.get('/api/:redirectString', async (req, res) => {
     }
 });
 
-router.post('/', isValidUrl ,async (req, res)=>{
+router.post('/', requireLogin, isValidUrl ,async (req, res)=>{
     try{
         const randString = random5digitString(5);
         const url = req.body.url;

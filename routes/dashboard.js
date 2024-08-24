@@ -1,5 +1,7 @@
 import express from 'express';
 
+
+import { requireLogin } from '../middleware/requireLogin.js';
 // model import
 
 import Link from '../models/Link.js'
@@ -7,7 +9,7 @@ import Link from '../models/Link.js'
 const router = express.Router();
 
 
-router.get('/', async (req, res)=>{
+router.get('/', requireLogin, async (req, res)=>{
     try{
         const links = await Link.find({})
         console.log(links);

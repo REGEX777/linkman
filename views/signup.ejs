@@ -3,12 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://kit.fontawesome.com/82eb69e53c.js" crossorigin="anonymous"></script>
 </head>
-<body class="min-h-screen flex items-center justify-center bg-gray-900">
-    <div class="w-full max-w-md bg-gray-800 p-8 rounded-lg shadow-lg">
-        <h2 class="text-3xl font-bold text-center text-white mb-8">Sign Up</h2>
+<body class="min-h-screen flex items-center justify-center font-inter bg-[#181D23]">
+    <div class="w-full max-w-md bg-[#1F252D] p-8 rounded-lg shadow-lg">
+        <h2 class="text-3xl font-bold text-center text-white mb-8 font-clash-display">Sign Up</h2>
+        <% if (error.length > 0) { %>
+            <div class="h-12 flex items-center justify-center w-full rounded-lg bg-red-500">
+                <p class="text-white font-clash-display"><i class="fa-solid fa-triangle-exclamation"></i> <%= error %></p>
+            </div>
+            <br>
+        <% } %>
         <form action="/signup" method="POST" class="space-y-6">
             <div>
                 <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
@@ -22,7 +29,7 @@
                     <input type="password" name="password" id="password" required class="w-full px-4 py-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                 </div>
             </div>
-            <button type="submit" class="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 transition duration-200">Sign Up</button>
+            <button type="submit" class="w-full py-2 px-4 bg-[#FF2145] text-white font-semibold rounded-md hover:bg-[#af1630] transition duration-200">Login</button>
         </form>
     </div>
 </body>
