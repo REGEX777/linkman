@@ -9,6 +9,7 @@ import LocalStrategy from 'passport-local';
 import bcrypt from 'bcryptjs';
 
 import User from './models/User.js'
+import { logError, errorHandler } from './middleware/errorLogger.js';
 
 const app = express();
 const port = 3000
@@ -88,7 +89,12 @@ app.get('/logout', function (req, res, next) {
         }
         res.redirect('/');
     });
-}); 
+});
+
+app.use(logError);
+
+
+app.use(errorHandler); 
 
 app.listen(port, ()=>{
     console.log(`App started on PORT ${port}`)

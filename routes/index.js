@@ -69,6 +69,15 @@ router.get('/api/:redirectString', async (req, res) => {
             return res.status(404).send("Not Found");
         }
 
+        const response = await fetch(link.targetUrl);
+
+        if (!response.ok) {
+            const err = new Error(`Targert url having error: ${response.status}`);
+            err.status = 500;
+            return next(err);
+        }
+
+
         const ip = "8.8.8.8"; 
         let country;
 

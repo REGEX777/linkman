@@ -10,7 +10,7 @@ const router = express.Router();
 
 
 router.get('/', requireLogin, async (req, res)=>{
-    try{
+    try{    
         const links = await Link.find({})
         console.log(links);
         res.render('dashboard', {links: links})
