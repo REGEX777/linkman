@@ -12,6 +12,7 @@
   "description": "",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "crypto": "^1.0.1",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
@@ -19,10 +20,13 @@
     "express-flash": "^0.0.2",
     "express-rate-limit": "^7.4.0",
     "express-session": "^1.18.0",
+    "express-validator": "^7.2.0",
     "ipinfo": "^1.5.1",
     "is-url": "^1.2.4",
     "mongoose": "^8.5.3",
-    "passport": "^0.7.0"
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.10"

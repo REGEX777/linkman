@@ -31,6 +31,7 @@ router.post('/', [
     try {
         const existingUser = await User.findOne();
         if (existingUser) {
+            console.log(existingUser)
             return res.status(403).render('miscError', {error: {message: "User already exists", code:403}})
         }
 
@@ -48,13 +49,14 @@ router.post('/', [
 
         req.login(newUser, (err) => {
             if (err) {
+                console.log(err);
+                
                 return res.status(500).json({
                     message: 'Error logging in after signup.'
                 });
             }
             return res.status(201).json({
-                message: 'User created successfully.',
-                apiKey
+                message: 'User created successfully.'
             });
         });
     } catch (err) {

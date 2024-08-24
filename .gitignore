@@ -1,3 +1,4 @@
 .env
 styles.css
 node_modules
+login-attempts.log

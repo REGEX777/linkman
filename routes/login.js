@@ -7,6 +7,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const router = express.Router();
@@ -30,8 +31,11 @@ const logAttempt = (email, ip, success) => {
 };
 
 router.get('/', (req, res) => {
-    res.render('login');
-});
+    res.render('login', { 
+        error: req.flash('error'), 
+        success: req.flash('success') 
+    })
+})
 
 router.post('/', loginLimiter, (req, res, next) => {
     const email = req.body.email;
