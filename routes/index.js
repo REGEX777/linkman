@@ -164,4 +164,23 @@ router.post('/', requireLogin, isValidUrl, async (req, res) => {
     }
 });
 
+
+router.delete('/delete/:id', requireLogin, async (req, res) => {
+    try {
+        const linkId = req.params.id;
+        
+        const link = await Link.findOne({ _id: linkId, owner: req.user._id });
+        
+        if (!link) {
+            return res.status(404).send('Link not found or you do not have permission to delete it.');
+        }
+
+        await Link.deleteOne({ _id: linkId });
+
+        res.redirect('/dashboard');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server error');
+    }
+});
 export default router;

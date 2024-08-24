@@ -1,4 +1,5 @@
 import express from 'express';
+import { requireLogin } from '../middleware/requireLogin.js';
 
 // model import
 
@@ -7,7 +8,7 @@ import Link from '../models/Link.js'
 const router = express.Router();
 
 
-router.get('/', async (req, res)=>{
+router.get('/', requireLogin, async (req, res)=>{
     try{
         let sortCriteria = {};
         // switch case for sorting
@@ -29,12 +30,10 @@ router.get('/', async (req, res)=>{
                 break;
         }
 
-        const links = await Link.find({ owner: req.user._id }).sort(sortCriteria);
-
+        const links = await Link.find({}).sort(sortCriteria);
         res.render('dashboard', {links: links})
     }catch(err){
         console.log(err);
-        
     }
 });
 

@@ -42,6 +42,9 @@
             <div class="flex items-center justify-center h-[3rem] <%= index % 2 === 0 ? 'bg-[#181D23]' : 'bg-[#1F252D]' %> w-full text-white">
                 <div class="flex items-center justify-between w-[80%]">
                     <div class="flex items-center justify-center gap-20">
+                        <form action="/delete/<%= link._id %>" method="POST" class="inline">
+                            <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded-lg">Delete</button>
+                        </form>
                         <p><%= index + 1 %></p>
                         <a class="hover:text-blue-600" href="/analyse/<%= link.redirectString %>"><%= link.url.substring(0, 50) %>...</a>
                     </div>
