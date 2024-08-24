@@ -4,12 +4,17 @@
     <div class="w-[80%] flex items-center justify-center h-[5rem] bg-[#1F252D] rounded-lg">
         <div class="w-[90%] flex items-center justify-between text-white">
             <p>My Links</p>
-            <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Sort By <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+            <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                type="button">Sort By <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 1 4 4 4-4" />
                 </svg>
             </button>
         </div>
-        <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+        <div id="dropdown"
+            class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                 <li>
                     <a href="/dashboard?sort=new" class="block px-4 py-2">New First</a>
@@ -30,25 +35,26 @@
     <div class="flex flex-col items-center justify-center w-[80%]">
         <div class="flex items-center justify-center w-full bg-[#1F252D] rounded-t-lg">
             <div class="w-[80%] flex items-center justify-between h-[4rem] text-[#797979]">
-                <div class="flex items-center justify-center gap-20">
-                    <p>Sr. no.</p>
-                    <p>Link</p>
+                <div class="flex items-center justify-start gap-10">
+                    <p class="w-[3rem] text-center">Sr. no.</p>
+                    <p class="w-[25rem]">Link</p>
                 </div>
-                <p>Visits</p>
+                <div class="flex items-center justify-end gap-5">
+                    <p class="w-[6rem] text-center">Visits</p>
+
+                    <p class="w-[10rem]"></p>
+                </div>
             </div>
         </div>
     
-        <% 
-            // PINNED LINKS PLS BE AT THE DAMN TOP FOR FUCKS SAKE
-            const sortedLinks = links.sort((a, b) => b.pinned - a.pinned);
-        %>
+        <% const sortedLinks = links.sort((a, b) => b.pinned - a.pinned); %>
     
         <% sortedLinks.forEach((link, index) => { %>
             <div class="flex items-center justify-center h-[3rem] <%= index % 2 === 0 ? 'bg-[#181D23]' : 'bg-[#1F252D]' %> w-full text-white">
                 <div class="flex items-center justify-between w-[80%]">
-                    <div class="flex items-center justify-center gap-20">
-                        <p><%= index + 1 %></p>
-                        <div class="relative group">
+                    <div class="flex items-center justify-start gap-10">
+                        <p class="w-[3rem] text-center"><%= index + 1 %></p>
+                        <div class="relative group w-[25rem]">
                             <% if(link.name){ %>
                                 <a class="hover:text-blue-600" href="/analyse/<%= link.redirectString %>">
                                     <%= link.name %>
@@ -58,31 +64,30 @@
                                     <%= link.url.substring(0, 50) %>...
                                 </a>
                             <% } %>
-    
-                            <!-- tooltip that will be visible after hovering over the text -->
                             <div class="absolute left-1/2 transform -translate-x-1/2 mt-2 w-max px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 <%= link.redirectString %>
                             </div>
                         </div>
                     </div>
-                    <p><%= link.visits.reduce((total, visit) => total + visit.count, 0) %></p> <!-- Sum up all visits for this link -->
-                    <div class="flex items-center justify-center flex-row gap-5">
-
-                    <form action="/pin/<%= link._id %>" method="POST" class="inline">
-                        <button type="submit" name="pinned" value="<%= !link.pinned %>" class="bg-blue-500 text-white px-2 py-1 rounded-lg">
-                            <%= link.pinned ? 'Unpin' : 'Pin' %>
-                        </button>
-                    </form>
-                    <form action="/delete/<%= link._id %>" method="POST" class="inline">
-                        <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded-lg">Delete</button>
-                    </form>
-                    <form action="/toggle-active/<%= link._id %>" method="POST" class="inline">
-                        <button type="submit" class="bg-<%= link.active ? 'green' : 'yellow' %>-500 text-white px-2 py-1 rounded-lg">
-                            <%= link.active ? 'Deactivate' : 'Activate' %>
-                        </button>
-                    </form>
-                </div>
-
+    
+                    <div class="flex items-center justify-end gap-5">
+                        <p class="w-[6rem] text-center"><%= link.visits.reduce((total, visit) => total + visit.count, 0) %></p>
+                        <div class="flex gap-2">
+                            <form action="/pin/<%= link._id %>" method="POST" class="inline">
+                                <button type="submit" name="pinned" value="<%= !link.pinned %>" class="bg-blue-500 text-white px-2 py-1 rounded-lg">
+                                    <%= link.pinned ? 'Unpin' : 'Pin' %>
+                                </button>
+                            </form>
+                            <form action="/delete/<%= link._id %>" method="POST" class="inline">
+                                <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded-lg">Delete</button>
+                            </form>
+                            <form action="/toggle-active/<%= link._id %>" method="POST" class="inline">
+                                <button type="submit" class="bg-<%= link.active ? 'green' : 'yellow' %>-500 text-white px-2 py-1 rounded-lg">
+                                    <%= link.active ? 'Deactivate' : 'Activate' %>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         <% }) %>
@@ -91,15 +96,15 @@
 <script>
     const closePopupButton = document.getElementById('closePopup');
     const bg = document.getElementById('bg-segs')
- 
+
     const togglePopup = () => {
-      popup.classList.toggle('hidden');
-      bg.classList.toggle('blur-sm')
-  
+        popup.classList.toggle('hidden');
+        bg.classList.toggle('blur-sm')
+
     };
-  
+
     const popupButton = document.getElementById('popup');
     popupButton.addEventListener('click', togglePopup);
-  </script>
-  
+</script>
+
 <%- include('partials/foot') -%>
