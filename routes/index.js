@@ -5,6 +5,8 @@ import path from 'path';
 import { fileURLToPath } from 'url'; 
 import ipinfo from 'ipinfo';
 
+import { requireLogin } from '../middleware/requireLogin.js';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const configPath = path.join(__dirname, '../config.json');
@@ -50,7 +52,7 @@ import Link from '../models/Link.js'
 
 const router = express.Router();
 
-router.get('/', (req, res)=>{
+router.get('/', requireLogin, (req, res)=>{
     res.render('index', { 
         error: req.flash('error'), 
         success: req.flash('success') 
@@ -58,7 +60,7 @@ router.get('/', (req, res)=>{
 })
 
 
-router.get('/api/:redirectString', async (req, res) => {
+router.get('/api/:redirectString', requireLogin, async (req, res) => {
     try {
         const redString = req.params.redirectString;
         const link = await Link.findOne({ redirectString: redString });
@@ -127,34 +129,39 @@ router.get('/api/:redirectString', async (req, res) => {
     }
 });
 
-router.post('/', isValidUrl ,async (req, res)=>{
-    try{
+router.post('/', requireLogin, isValidUrl, async (req, res) => {
+    try {
         const randString = random5digitString(5);
         const url = req.body.url;
+        const expiration = req.body.expiration;
+
+        let expirationDate = null;
         if (expiration !== "never") {
             const expirationDays = parseInt(expiration);
             expirationDate = new Date();
             expirationDate.setDate(expirationDate.getDate() + expirationDays);
         }
+
         const link = new Link({
             url: url,
             redirectString: randString,
             expirationDate: expirationDate
-        })
+        });
 
-        await link.save().then((err)=>{
-            if(err){
-                console.log(err)
+        await link.save().then((err) => {
+            if (err) {
+                console.log(err);
             }
-            if(debug){
-                console.log(`Short URL created succesfully.`)
+            if (debug) {
+                console.log(`Short URL created successfully.`);
             }
-        })
+        });
+
         const shortUrl = `${config.domain}${link.redirectString}`;
-        res.render('success', {shortUrl})
-    }catch (err){
-        console.log(err)
+        res.render('success', { shortUrl });
+    } catch (err) {
+        console.log(err);
     }
-})
+});
 
 export default router;
