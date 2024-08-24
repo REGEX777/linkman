@@ -47,9 +47,16 @@
                         </form>
                         <p><%= index + 1 %></p>
                         <div class="relative group">
-                            <a class="hover:text-blue-600" href="/analyse/<%= link.redirectString %>">
-                                <%= link.url.substring(0, 50) %>...
-                            </a>
+                            <% if(link.name){ %>
+                                <a class="hover:text-blue-600" href="/analyse/<%= link.redirectString %>">
+                                    <%= link.name %>
+                                </a>
+                            <% }else{ %>
+                                <a class="hover:text-blue-600" href="/analyse/<%= link.redirectString %>">
+                                    <%= link.url.substring(0, 50) %>...
+                                </a>
+                            <% } %>
+
                             <!-- tooltip that will be visible after hovering over the text -->
                             <div class="absolute left-1/2 transform -translate-x-1/2 mt-2 w-max px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 <%= link.redirectString %>

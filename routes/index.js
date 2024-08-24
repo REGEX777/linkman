@@ -156,7 +156,8 @@ router.post('/', requireLogin, isValidUrl, async (req, res) => {
         const link = new Link({
             url: url,
             redirectString: randString,
-            expirationDate: expirationDate
+            expirationDate: expirationDate,
+            name: req.body.name
         });
 
         await link.save().then((err) => {

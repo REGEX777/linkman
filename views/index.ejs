@@ -3,7 +3,7 @@
         <div class="w-full flex-grow flex flex-col items-center justify-start">
             <br><br>
             <div class="w-[80%] flex items-center justify-start">
-                <div class="min-h-[20rem] bg-[#1F252D] w-[70%] rounded-lg flex flex-col items-start justify-center px-20 text-white gap-7">
+                <div class="min-h-[20rem] bg-[#1F252D] w-[70%] rounded-lg flex flex-col items-start justify-center px-20 py-10 text-white gap-7">
                     <% if (error.length > 0) { %>
                         <div class="h-12 flex items-center justify-center w-[80%] rounded-lg bg-red-500">
                             <p><i class="fa-solid fa-triangle-exclamation"></i> <%= error %></p>
@@ -14,6 +14,7 @@
                     <form class="w-full flex flex-col gap-7" action="/" method="post">
                         <input class="h-14 w-[80%] bg-[#181D23] rounded-lg border-2 border-[#FF2145] px-10" name="url" placeholder="Enter the URL" type="text">
                         <input class="h-14 w-[80%] bg-[#181D23] rounded-lg border-2 border-[#FF2145] px-10" name="customKeyword" placeholder="Enter custom keyword (optional)" type="text">
+                        <input class="h-14 w-[80%] bg-[#181D23] rounded-lg border-2 border-[#FF2145] px-10" name="name" placeholder="Enter custom name (optional)" type="text">
                         <select class="h-14 w-[80%] bg-[#181D23] rounded-lg border-2 border-[#FF2145] px-10" name="expiration">
                             <option value="never">Never</option> 
                             <option value="1">1 day</option>
