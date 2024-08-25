@@ -80,3 +80,18 @@ qrCodeUrl is not defined - URL: / - IP: ::1
 
 links is not defined - URL: / - IP: ::1
 2024-08-25T06:43:30.464Z - error: Failed to lookup view "search" in views directory "E:\codin_stuff\linkman\linkman\views" - URL: /search - IP: ::1
+2024-08-25T11:56:52.182Z - error: E:\codin_stuff\linkman\linkman\views\success.ejs:1
+ >> 1| <%- include('partials/nav') -%>
+    2|         <!-- Main  -->
+    3|         <div class="w-full flex-grow flex flex-col items-center justify-start">
+    4|             <br><br>
+
+E:\codin_stuff\linkman\linkman\views\partials\nav.ejs:18
+    16|     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
+    17|     <link rel="stylesheet" href="/css/styles.css">
+ >> 18|     <title><%= title %></title>
+    19| </head>
+    20| 
+    21| <body class="font-inter bg-[#181D23]">
+
+title is not defined - URL: / - IP: ::1

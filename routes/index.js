@@ -187,7 +187,7 @@ router.post('/', requireLogin, isValidUrl, async (req, res) => {
                 return res.render('error', { error: 'failed to generate QR code.' });
             }
 
-            res.render('success', { shortUrl, qrCodeUrl });
+            res.render('success', { shortUrl, qrCodeUrl, title: "Success" });
         });
 
     } catch (err) {
