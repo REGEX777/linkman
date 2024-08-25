@@ -1,36 +1,47 @@
 <%- include('partials/nav') -%>
-        <!-- Main  -->
-        <div class="w-full flex-grow flex flex-col items-center justify-start">
-            <br><br>
-            <div class="w-[80%] flex items-center justify-start">
-                <div class="min-h-[20rem] bg-[#1F252D] w-[70%] rounded-lg flex flex-col items-start justify-center px-20 text-white gap-7">
+<!-- Main  -->
+<div class="w-full flex-grow flex flex-col items-center justify-start">
+    <br><br>
+    <div class="w-[80%] flex items-center justify-start">
+        <div
+            class="min-h-[20rem] bg-[#1F252D] w-[70%] rounded-lg flex flex-row items-center justify-center px-20 text-white gap-7">
 
-
-                    <p>URL Shortening Successful!</p>
-                    <div class="flex flex-row items-center justify-start gap-3 w-full">
-                        <input id="url-input" class="h-14 w-[80%] bg-[#181D23] rounded-lg border-2 border-[#FF2145] px-10" name="url" placeholder="Enter the URL" type="text" value="<%= shortUrl %>" readonly>
-                        <button id="copy-button" class="flex items-center justify-center h-14 w-14 bg-[#FF2145] rounded-lg">
-                            <p class="text-xl"><i class="fa-regular fa-clipboard"></i></p>
-                        </button>
-                        <p class="mt-5">Scan the QR code:</p>
-                        <img src="<%= qrCodeUrl %>" alt="QR Code">
-                    </div>
-
-                    <form class="w-full flex flex-col gap-7" action="/" method="get">
-                        <button class="h-[3rem] rounded-lg w-[10rem] bg-[#FF2145] text-white font-medium" type="submit">
-                            Shorten New URL
-                        </button>
-                    </form>
+            <div class="flex flex-col items-start gap-7 justify-center w-full">
+                <p>URL Shortening Successful!</p>
+                <div class="flex flex-row items-center justify-start gap-3 w-full">
+                    <input id="url-input" class="h-14 w-[80%] bg-[#181D23] rounded-lg border-2 border-[#FF2145] px-10"
+                        name="url" placeholder="Enter the URL" type="text" value="<%= shortUrl %>" readonly>
+                    <button id="copy-button" class="flex items-center justify-center h-14 w-14 bg-[#FF2145] rounded-lg">
+                        <p class="text-xl"><i class="fa-regular fa-clipboard"></i></p>
+                    </button>
                 </div>
+                <form class="w-full flex flex-col gap-7" action="/" method="get">
+                    <button class="h-[3rem] rounded-lg w-[10rem] bg-[#FF2145] text-white font-medium" type="submit">
+                        Shorten New URL
+                    </button>
+                </form>
             </div>
+
+            <div class="flex flex-col items-center justify-center gap-3 mt-5">
+                <p class="text-lg">Scan the QR code:</p>
+                <img src="<%= qrCodeUrl %>" alt="QR Code" class="w-32 h-32">
+                <a href="<%= qrCodeUrl %>" download="qr-code.png"
+                    class="flex items-center justify-center h-10 px-5 bg-[#FF2145] rounded-lg text-white">
+                    <i class="fa-solid fa-download mr-2"></i>
+                    <p class="text-sm">Download</p>
+                </a>
+            </div>
+
         </div>
+    </div>
+</div>
 <%- include('partials/foot') -%>
 
 <script>
-    document.getElementById('copy-button').addEventListener('click', function() {
+    document.getElementById('copy-button').addEventListener('click', function () {
         const input = document.getElementById('url-input');
-        input.select(); 
-        document.execCommand('copy'); 
+        input.select();
+        document.execCommand('copy');
         alert('URL copied to clipboard!');
     });
 </script>

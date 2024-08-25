@@ -179,7 +179,7 @@ router.post('/', requireLogin, isValidUrl, async (req, res) => {
             }
         });
 
-        const shortUrl = `${config.domain}/${link.redirectString}`;
+        const shortUrl = `${config.domain}${link.redirectString}`;
 
         qrcode.toDataURL(shortUrl, function (err, qrCodeUrl) {
             if (err) {
