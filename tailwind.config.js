@@ -30,7 +30,8 @@ export default {
         '450peeeexxx': '450px',
         '470pxx': '470px',
         '700px': '700px',
-        '1200px': '1200px'
+        '1200px': '1200px',
+        '400px': '400px'
       },
     },
   },
