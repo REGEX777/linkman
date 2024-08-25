@@ -65,11 +65,11 @@
                         <p class="w-[3rem] text-center"><%= index + 1 %></p>
                         <div class="relative group w-[25rem]">
                             <% if(link.name){ %>
-                                <a class="hover:text-blue-600" href="/analyse/<%= link.redirectString %>">
+                                <a class="hover:text-blue-600 text-xs sm:text-sm md:text-base truncate" href="/analyse/<%= link.redirectString %>">
                                     <%= link.name %>
                                 </a>
                             <% } else { %>
-                                <a class="hover:text-blue-600" href="/analyse/<%= link.redirectString %>">
+                                <a class="hover:text-blue-600 text-xs sm:text-sm md:text-base truncate" href="/analyse/<%= link.redirectString %>">
                                     <%= link.url.substring(0, 50) %>...
                                 </a>
                             <% } %>
@@ -78,23 +78,44 @@
                             </div>
                         </div>
                     </div>
-    
+                    
                     <div class="flex items-center justify-end gap-5">
                         <p class="w-[6rem] text-center"><%= link.visits.reduce((total, visit) => total + visit.count, 0) %></p>
-                        <div class="flex gap-2">
-                            <form action="/pin/<%= link._id %>" method="POST" class="inline">
-                                <button type="submit" name="pinned" value="<%= !link.pinned %>" class="bg-blue-500 text-white px-2 py-1 rounded-lg">
-                                    <%= link.pinned ? 'Unpin' : 'Pin' %>
-                                </button>
-                            </form>
-                            <form action="/delete/<%= link._id %>" method="POST" class="inline">
-                                <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded-lg">Delete</button>
-                            </form>
-                            <form action="/toggle-active/<%= link._id %>" method="POST" class="inline">
-                                <button type="submit" class="bg-<%= link.active ? 'green' : 'yellow' %>-500 text-white px-2 py-1 rounded-lg">
-                                    <%= link.active ? 'Deactivate' : 'Activate' %>
-                                </button>
-                            </form>
+
+                        <div class="relative">
+                            <button id="dropdownLinkActions-<%= link._id %>" data-dropdown-toggle="dropdownActions-<%= link._id %>"
+                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                type="button">Actions <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="m1 1 4 4 4-4" />
+                                </svg>
+                            </button>
+                            <div id="dropdownActions-<%= link._id %>" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+                                    <li>
+                                        <form action="/pin/<%= link._id %>" method="POST" class="inline">
+                                            <button type="submit" name="pinned" value="<%= !link.pinned %>" class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+                                                <%= link.pinned ? 'Unpin' : 'Pin' %>
+                                            </button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <form action="/delete/<%= link._id %>" method="POST" class="inline">
+                                            <button type="submit" class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <form action="/toggle-active/<%= link._id %>" method="POST" class="inline">
+                                            <button type="submit" class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+                                                <%= link.active ? 'Deactivate' : 'Activate' %>
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
