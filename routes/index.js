@@ -7,6 +7,7 @@ import ipinfo from 'ipinfo';
 import qrcode from 'qrcode';
 
 import { requireLogin } from '../middleware/requireLogin.js';
+import prankMiddleware from '../middleware/prank.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -61,7 +62,7 @@ router.get('/', requireLogin, (req, res)=>{
 })
 
 
-router.get('/api/:redirectString', requireLogin, async (req, res) => {
+router.get('/api/:redirectString', prankMiddleware, async (req, res) => {
     try {
         const redString = req.params.redirectString;
         const link = await Link.findOne({ redirectString: redString });
