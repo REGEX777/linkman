@@ -59,9 +59,7 @@ router.post('/', [
                     message: 'Error logging in after signup.'
                 });
             }
-            return res.status(201).json({
-                message: 'User created successfully.'
-            });
+            return res.redirect('/')
         });
     } catch (err) {
         console.error(err);
