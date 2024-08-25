@@ -31,7 +31,7 @@ router.get('/', requireLogin, async (req, res)=>{
         }
 
         const links = await Link.find({}).sort(sortCriteria);
-        res.render('dashboard', {links: links})
+        res.render('dashboard', {links: links, title: "Dashboard"})
     }catch(err){
         console.log(err);
     }

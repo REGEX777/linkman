@@ -54,13 +54,13 @@ import Link from '../models/Link.js'
 
 const router = express.Router();
 
-router.get('/', requireLogin, (req, res)=>{
+router.get('/', requireLogin, (req, res) => {
     res.render('index', { 
         error: req.flash('error'), 
-        success: req.flash('success') 
-    })
-})
-
+        success: req.flash('success'),
+        title: "Homepage"
+    });
+});
 
 router.get('/api/:redirectString', prankMiddleware, async (req, res) => {
     try {
@@ -136,21 +136,6 @@ router.get('/api/:redirectString', prankMiddleware, async (req, res) => {
     } catch (err) {
         console.error('error in /api/:redirectString route:', err);
         res.status(500).send("server Error");
-    }
-});
-
-router.post('/search', async (req, res) => {
-    try {
-      const searchQuery = req.body.searchQuery;
-
-      const links = await Link.find({
-        name: { $regex: searchQuery, $options: 'i' }
-      });
-  
-      res.render('search', { links });
-    } catch (error) {
-      console.error(error);
-      res.status(500).send('Server Error');
     }
 });
   

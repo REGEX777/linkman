@@ -15,8 +15,9 @@ const router = express.Router();
 router.get('/', (req, res) => {
     res.render('signup', { 
         error: req.flash('error'), 
-        success: req.flash('success') 
-    })
+        success: req.flash('success'),
+        title: "Sign Up"
+    });
 });
 
 router.post('/', [
