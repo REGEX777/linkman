@@ -1,0 +1,30 @@
+<%- include('partials/nav') -%>
+
+<div class="flex flex-grow flex-col items-center justify-start w-full gap-10">
+    <div class="container mx-auto py-4">
+        <form action="/search" method="POST" class="mb-4">
+            <label for="searchQuery" class="block text-lg font-medium text-white mb-2">Search for a Link:</label>
+            <div class="flex">
+                <input type="text" id="searchQuery" name="searchQuery" placeholder="Enter link name..." class="w-full border-2 p-2 rounded-l-lg" required>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-r-lg">Search</button>
+            </div>
+        </form>
+        
+        <% if (links && links.length > 0) { %>
+          <div class="mt-4 text-white">
+            <h2 class="text-lg font-semibold">Search Results:</h2>
+            <ul class="mt-2">
+              <% links.forEach(link => { %>
+                <li class="py-2 border-b border-gray-700">
+                  <a href="/analyse/<%= link.redirectString %>" class="text-blue-400 hover:underline"><%= link.name %></a>
+                </li>
+              <% }) %>
+            </ul>
+          </div>
+        <% } else if (links) { %>
+          <p class="mt-4 text-white">No links found matching your search query.</p>
+        <% } %>
+    </div>
+</div>
+
+<%- include('partials/foot') -%>

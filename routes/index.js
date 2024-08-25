@@ -138,6 +138,22 @@ router.get('/api/:redirectString', requireLogin, async (req, res) => {
     }
 });
 
+router.post('/search', async (req, res) => {
+    try {
+      const searchQuery = req.body.searchQuery;
+
+      const links = await Link.find({
+        name: { $regex: searchQuery, $options: 'i' }
+      });
+  
+      res.render('search', { links });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Server Error');
+    }
+});
+  
+
 router.post('/', requireLogin, isValidUrl, async (req, res) => {
     try {
         const randString = random5digitString(5);

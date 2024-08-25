@@ -70,3 +70,13 @@ tag is not defined - URL: /dashboard - IP: ::1
     19|                     <form class="w-full flex flex-col gap-7" action="/" method="get">
 
 qrCodeUrl is not defined - URL: / - IP: ::1
+2024-08-25T06:37:25.490Z - error: E:\codin_stuff\linkman\linkman\views\index.ejs:10
+    8|             </form>
+    9|           
+ >> 10|             <% if (links.length > 0) { %>
+    11|               <h2 class="text-lg font-semibold">Search Results:</h2>
+    12|               <ul>
+    13|                 <% links.forEach(link => { %>
+
+links is not defined - URL: / - IP: ::1
+2024-08-25T06:43:30.464Z - error: Failed to lookup view "search" in views directory "E:\codin_stuff\linkman\linkman\views" - URL: /search - IP: ::1

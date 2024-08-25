@@ -32,7 +32,16 @@
         </div>
     </div>
 
-    <div class="flex flex-col items-center justify-center w-[80%]">
+    <div class="w-[80%] flex items-center justify-center mt-4">
+        <form action="/search" method="POST" class="w-full flex items-center">
+            <input type="text" id="searchQuery" name="searchQuery" placeholder="Enter link name..."
+                class="flex-grow border-2 p-2 rounded-l-lg focus:outline-none focus:border-blue-500"
+                required>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-r-lg">Search</button>
+        </form>
+    </div>
+
+    <div class="flex flex-col items-center justify-center w-[80%] mt-6">
         <div class="flex items-center justify-center w-full bg-[#1F252D] rounded-t-lg">
             <div class="w-[80%] flex items-center justify-between h-[4rem] text-[#797979]">
                 <div class="flex items-center justify-start gap-10">
@@ -93,6 +102,7 @@
         <% }) %>
     </div>
 </div>
+
 <script>
     const closePopupButton = document.getElementById('closePopup');
     const bg = document.getElementById('bg-segs')
