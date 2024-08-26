@@ -220,8 +220,8 @@ router.delete('/delete/:id', requireLogin, async (req, res) => {
         }
 
         await Link.deleteOne({ _id: linkId });
-
-        res.redirect('/dashboard');
+        
+        res.status(200).json({ success: true, message: 'Link deleted' });
     } catch (err) {
         console.error(err);
         res.status(500).send('Server error');

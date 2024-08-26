@@ -41,94 +41,109 @@
     </div>
 
     <div class="relative overflow-x-auto w-[80%] rounded-lg">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                    <th scope="col" class="px-6 py-3">
-                        Sr No.
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Link
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Visits
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Action
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <% const sortedLinks = links.sort((a, b) => b.pinned - a.pinned); %>
-                <% sortedLinks.forEach((link, index) => { %>
-                <tr class="<%= index % 2 === 0 ? 'bg-[#181D23]' : 'bg-[#1F252D]' %> border-b dark:border-gray-700">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <%= index + 1 %>
-                    </th>
-                    <td class="px-6 py-4">
-                        <% if(link.name){ %>
-                        <a class="hover:text-blue-600" href="/analyse/<%= link.redirectString %>">
-                            <%= link.name %>
-                        </a>
-                        <% } else { %>
-                        <a class="hover:text-blue-600" href="/analyse/<%= link.redirectString %>">
-                            <%= link.redirectString %>
-                        </a>
-                        <% } %>
-                    </td>
-                    <td class="px-6 py-4">
-                        <%= link.visits.reduce((total, visit) => total + visit.count, 0) %>
-                    </td>
-                    <td class="px-6 py-4">
-                        <div class="relative inline-block text-left">
-                            <button id="dropdownLinkActions-<%= link._id %>"
-                                data-dropdown-toggle="dropdownActions-<%= link._id %>"
-                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                                type="button">Actions 
-                                <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="m1 1 4 4 4-4" />
-                                </svg>
-                            </button>
-                            <div id="dropdownActions-<%= link._id %>"
-                                class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                                    <li>
-                                        <form action="/pin/<%= link._id %>" method="POST" class="inline">
-                                            <button type="submit" name="pinned" value="<%= !link.pinned %>"
-                                                class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">
-                                                <%= link.pinned ? 'Unpin' : 'Pin' %>
-                                            </button>
-                                        </form>
-                                    </li>
-                                    <li>
-                                        <form action="/delete/<%= link._id %>" method="DELETE" class="inline">
-                                            <button type="submit"
-                                                class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">
-                                                Delete
-                                            </button>
-                                        </form>
-                                    </li>
-                                    <li>
-                                        <form action="/toggle-active/<%= link._id %>" method="POST" class="inline">
-                                            <button type="submit"
-                                                class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">
-                                                <%= link.active ? 'Deactivate' : 'Activate' %>
-                                            </button>
-                                        </form>
-                                    </li>
-                                </ul>
+        <form id="bulkActionForm" action="#" class="flex flex-col items-start justify-center gap-10" method="POST">
+            <div class="mt-4">
+                <button type="button" class="px-4 py-2 bg-red-500 text-white rounded"
+                    onclick="performBulkAction('delete')">Delete Selected</button>
+                <button type="button" class="px-4 py-2 bg-yellow-500 text-white rounded"
+                    onclick="performBulkAction('pin')">Pin Selected</button>
+                <button type="button" class="px-4 py-2 bg-green-500 text-white rounded"
+                    onclick="performBulkAction('toggle-active')">Toggle Active Selected</button>
+            </div>
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            <input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)">
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Sr No.
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Link
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Visits
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Actions
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% const sortedLinks = links.sort((a, b) => b.pinned - a.pinned); %>
+                    <% sortedLinks.forEach((link, index) => { %>
+                    <tr class="<%= index % 2 === 0 ? 'bg-[#181D23]' : 'bg-[#1F252D]' %> border-b dark:border-gray-700">
+                        <td class="px-6 py-4">
+                            <input type="checkbox" name="selectedLinks" value="<%= link._id %>">
+                        </td>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <%= index + 1 %>
+                        </th>
+                        <td class="px-6 py-4">
+                            <% if(link.name){ %>
+                            <a class="hover:text-blue-600" href="/analyse/<%= link.redirectString %>">
+                                <%= link.name %>
+                            </a>
+                            <% } else { %>
+                            <a class="hover:text-blue-600" href="/analyse/<%= link.redirectString %>">
+                                <%= link.redirectString %>
+                            </a>
+                            <% } %>
+                        </td>
+                        <td class="px-6 py-4">
+                            <%= link.visits.reduce((total, visit) => total + visit.count, 0) %>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="relative inline-block text-left">
+                                <button id="dropdownLinkActions-<%= link._id %>"
+                                    data-dropdown-toggle="dropdownActions-<%= link._id %>"
+                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                    type="button">Actions
+                                    <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 10 6">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="m1 1 4 4 4-4" />
+                                    </svg>
+                                </button>
+                                <div id="dropdownActions-<%= link._id %>"
+                                    class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+                                        <li>
+                                            <form action="/pin/<%= link._id %>" method="POST" class="inline">
+                                                <button type="submit" name="pinned" value="<%= !link.pinned %>"
+                                                    class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+                                                    <%= link.pinned ? 'Unpin' : 'Pin' %>
+                                                </button>
+                                            </form>
+                                        </li>
+                                        <li>
+                                            <form id="deleteForm-<%= link._id %>" class="inline">
+                                                <button type="button" onclick="deleteLink('<%= link._id %>')"
+                                                    class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </li>
+                                        <li>
+                                            <form action="/toggle-active/<%= link._id %>" method="POST" class="inline">
+                                                <button type="submit"
+                                                    class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">
+                                                    <%= link.active ? 'Deactivate' : 'Activate' %>
+                                                </button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                </tr>
-                <% }) %>
-            </tbody>
-            
-        </table>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </form>
     </div>
-    
+
 </div>
 
 <script>
@@ -140,6 +155,80 @@
         bg.classList.toggle('blur-sm')
 
     };
+    async function deleteLink(linkId) {
+        if (confirm('Are you sure you want to delete this link?')) {
+            try {
+                const response = await fetch(`/delete/${linkId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    window.location.href = '/dashboard';
+                } else {
+                    alert('Failed to delete the link');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while deleting the link');
+            }
+        }
+    }
+
+    function toggleSelectAll(source) {
+        checkboxes = document.getElementsByName('selectedLinks');
+        for (var i = 0, n = checkboxes.length; i < n; i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+
+    async function performBulkAction(action) {
+        const selectedLinks = Array.from(document.querySelectorAll('input[name="selectedLinks"]:checked'))
+            .map(cb => cb.value);
+
+        if (selectedLinks.length === 0) {
+            alert('Please select at least one link.');
+            return;
+        }
+
+        if (confirm(`Are you sure you want to ${action} the selected links?`)) {
+            for (let linkId of selectedLinks) {
+                try {
+                    let response;
+                    if (action === 'delete') {
+                        response = await fetch(`/delete/${linkId}`, {
+                            method: 'DELETE'
+                        });
+                    } else if (action === 'pin') {
+                        response = await fetch(`/pin/${linkId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                pinned: true
+                            })
+                        });
+                    } else if (action === 'toggle-active') {
+                        response = await fetch(`/toggle-active/${linkId}`, {
+                            method: 'POST'
+                        });
+                    }
+
+                    if (!response.ok) {
+                        alert(`Failed to ${action} link with ID ${linkId}`);
+                    }
+                } catch (error) {
+                    console.error(`Error while trying to ${action} link with ID ${linkId}:`, error);
+                    alert(`An error occurred while trying to ${action} link with ID ${linkId}`);
+                }
+            }
+
+            window.location.reload();
+        }
+    }
 </script>
 
 <%- include('partials/foot') -%>
