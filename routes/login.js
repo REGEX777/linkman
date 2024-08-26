@@ -5,7 +5,7 @@ import fs from 'fs';
 import path from 'path';
 
 import { fileURLToPath } from 'url';
-import { isLoggedOut } from '../middleware/isLoggedOut';
+import { isLoggedOut } from '../middleware/isLoggedOut.js';
 
 
 const __filename = fileURLToPath(import.meta.url);

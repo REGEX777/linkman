@@ -61,7 +61,7 @@
             <tbody>
                 <% const sortedLinks = links.sort((a, b) => b.pinned - a.pinned); %>
                 <% sortedLinks.forEach((link, index) => { %>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <tr class="<%= index % 2 === 0 ? 'bg-[#181D23]' : 'bg-[#1F252D]' %> border-b dark:border-gray-700">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         <%= index + 1 %>
                     </th>
@@ -103,7 +103,7 @@
                                         </form>
                                     </li>
                                     <li>
-                                        <form action="/delete/<%= link._id %>" method="POST" class="inline">
+                                        <form action="/delete/<%= link._id %>" method="DELETE" class="inline">
                                             <button type="submit"
                                                 class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">
                                                 Delete
@@ -125,6 +125,7 @@
                 </tr>
                 <% }) %>
             </tbody>
+            
         </table>
     </div>
     

@@ -213,7 +213,7 @@ router.delete('/delete/:id', requireLogin, async (req, res) => {
     try {
         const linkId = req.params.id;
         
-        const link = await Link.findOne({ _id: linkId, owner: req.user._id });
+        const link = await Link.findOne({ _id: linkId });
         
         if (!link) {
             return res.status(404).send('Link not found or you do not have permission to delete it.');

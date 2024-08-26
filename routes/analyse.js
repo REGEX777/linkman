@@ -49,7 +49,8 @@ router.get('/:redirectString', requireLogin, async (req, res) => {
             countryNames: JSON.stringify(countryNames),
             countryVisitCounts: JSON.stringify(countryVisitCounts),
             sortedCountries: sortedCountries,
-            title: "Link Overview"
+            title: "Link Overview",
+            link: link
         });
     } catch (error) {
         console.error('Server Error:', error);
