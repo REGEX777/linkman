@@ -119,5 +119,9 @@ Here's an overview of the project structure:
 `prank.js`
 - A fun middleware that could be used to play pranks on users.
 
+## Youtube Overview
+
+[![Linkman Installation Guide](https://img.youtube.com/vi/_sboFDuxanM/0.jpg)](https://www.youtube.com/watch?v=_sboFDuxanM)
+
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
