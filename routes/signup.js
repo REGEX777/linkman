@@ -111,8 +111,19 @@ router.post('/signup',
             });
 
             await newUser.save();
+            req.login(newUser, err => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    if (req.cookies.redUrl) {
+                        const redirectUrl = req.cookies.redUrl
+                        res.redirect(redirectUrl)
+                    } else {
+                        res.redirect('/')
+                    }
+                }
+            })
             req.flash('success', 'Registration successful, please log in');
-            res.redirect('/login');
         } catch (err) {
             console.error(err);
             req.flash('error', 'Failed to register user');

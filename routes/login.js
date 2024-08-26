@@ -53,9 +53,9 @@ router.post('/', loginLimiter, (req, res, next) => {
             if (err) return next(err);
             delete failedLoginAttempts[email];
             logAttempt(email, ip, true);
-            return res.redirect('/');
+
+            return res.redirect(req.cookies.redUrl || '/');  
         });
     })(req, res, next);
 });
-
 export default router;
